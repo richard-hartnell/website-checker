@@ -3,8 +3,9 @@ import hashlib
 from urllib.request import urlopen, Request
 
 # setting the URL you want to monitor
-url = Request('https://www.artsfund.org/accelerator/',
+url1 = Request('https://www.artsfund.org/accelerator/',
               headers={'User-Agent': 'Mozilla/5.0'})
+url2 = Request('https://www.example.com', headers={'User-Agent': 'Mozilla/5.0'})
 
 # to perform a GET request and load the
 # content of the website and store it in a var
@@ -13,7 +14,7 @@ response = urlopen(url).read()
 # to create the initial hash
 currentHash = hashlib.sha224(response).hexdigest()
 print("running")
-time.sleep(10)
+time.sleep(3000)
 while True:
     try:
         # perform the get request and store it in a var
@@ -46,8 +47,8 @@ while True:
             # create a hash
             currentHash = hashlib.sha224(response).hexdigest()
 
-            # wait for 30 seconds
-            time.sleep(30)
+            # wait for 3000 seconds
+            time.sleep(3000)
             continue
 
     # To handle exceptions
