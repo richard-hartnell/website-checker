@@ -5,7 +5,7 @@ from urllib.request import urlopen, Request
 # setting the URL you want to monitor
 url1 = Request('https://www.artsfund.org/accelerator/',
               headers={'User-Agent': 'Mozilla/5.0'})
-url2 = Request('https://www.example.com', headers={'User-Agent': 'Mozilla/5.0'})
+url2 = Request('https://www.whatcomcf.org', headers={'User-Agent': 'Mozilla/5.0'})
 
 # to perform a GET request and load the
 # content of the website and store it in a var
