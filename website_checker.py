@@ -14,9 +14,15 @@ def send_email(url):
     server.login('pi@richardhartnell.com', pwd)
     server.send_message(msg, from_addr='pi@richardhartnell.com', to_addrs='programming@lookoutarts.com')
 
+def make_hash(url):
+    response = urlopen(Request(url, headers={'User-Agent': 'Mozilla/5.0'})).read(9000)
+    hashes[url] = hashlib.sha224(response).hexdigest()
+
 from_addr = 'pi@richardhartnell.com'
 to_addr = 'programming@lookoutarts.com'
 hashes = {}
+
+print("running")
 
 with open('./creds.txt', 'r') as password_file:
     pwd = password_file.read()
@@ -27,46 +33,27 @@ url_list = ['https://www.artsfund.org/accelerator/',
 
 #create initial hashes
 for url in url_list:
-    response = urlopen(Request(url, headers={'User-Agent': 'Mozilla/5.0'})).read(9000)
-    hashes[url] = hashlib.sha224(response).hexdigest()
+    make_hash(url)
 
-send_email('test.com')
-print("running")
-print(hashes)
-time.sleep(3)
+print("first hashes complete")
+time.sleep(1800)
 
-# while True:
-#     for url in url_list:
-#         try:
-#             # perform the get request and store it in a var
-#             response = urlopen(url).read(9000)
+while True:
+    for url in url_list:
+        try:
 
-#             # create a hash
-#             currentHash = hashlib.sha224(response).hexdigest()
+            response = urlopen(url).read(9000)
+            newHash = hashlib.sha224(response).hexdigest()
 
-#             # wait for 30 seconds
-#             time.sleep(3)
+            if newHash == hashes[url]:
+                continue
 
-#             # perform the get request
-#             response = urlopen(url).read(9000)
+            else:
+                print("something changed: " + url)
+                send_email(url)
+                hashes[url] = newHash
+                time.sleep(1800)
+                continue
 
-#             # create a new hash
-#             newHash = hashlib.sha224(response).hexdigest()
-
-#             # check if new hash is same as the previous hash
-#             if newHash == currentHash:
-#                 continue
-
-#             # if something changed in the hashes
-#             else:
-#                 # notify
-#                 send_email(url)
-
-#                 #save new hash
-#                 response = urlopen(url).read(9000)
-#                 hashes[url] = hashlib.sha224(response).hexdigest()
-#                 time.sleep(3)
-#                 continue
-
-#         except Exception as e:
-#             print("error")
+        except Exception as e:
+            print("error")
