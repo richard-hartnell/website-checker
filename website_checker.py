@@ -27,8 +27,9 @@ print("running")
 with open('./creds.txt', 'r') as password_file:
     pwd = password_file.read()
 
-url_list = ['https://www.artsfund.org/accelerator/',
+url_list = ['https://www.arts.wa.gov/grants/',
             'https://whatcomcf.org/receive/apply-for-a-grant/',
+            'https://www.artsfund.org/about-arts-fund/grants/'
 ]
 
 #create initial hashes
