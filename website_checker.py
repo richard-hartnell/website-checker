@@ -4,6 +4,12 @@ from urllib.request import urlopen, Request
 import smtplib
 from email import message
 
+from_addr = 'pi@richardhartnell.com'
+to_addr = 'programming@lookoutarts.com'
+hashes = {}
+readlength = 9000
+sleeptime = 1800
+
 def send_email(url):
     msg = message.Message()
     msg.add_header('from', 'pi@richardhartnell.com')
@@ -15,12 +21,8 @@ def send_email(url):
     server.send_message(msg, from_addr='pi@richardhartnell.com', to_addrs='programming@lookoutarts.com')
 
 def make_hash(url):
-    response = urlopen(Request(url, headers={'User-Agent': 'Mozilla/5.0'})).read(9000)
+    response = urlopen(Request(url, headers={'User-Agent': 'Mozilla/5.0'})).read(readlength)
     hashes[url] = hashlib.sha224(response).hexdigest()
-
-from_addr = 'pi@richardhartnell.com'
-to_addr = 'programming@lookoutarts.com'
-hashes = {}
 
 print("running")
 
@@ -37,13 +39,13 @@ for url in url_list:
     make_hash(url)
 
 print("first hashes complete")
-time.sleep(1800)
+time.sleep(sleeptime)
 
 while True:
     for url in url_list:
         try:
 
-            response = urlopen(url).read(9000)
+            response = urlopen(url).read(readlength)
             newHash = hashlib.sha224(response).hexdigest()
 
             if newHash == hashes[url]:
@@ -53,7 +55,7 @@ while True:
                 print("something changed: " + url)
                 send_email(url)
                 hashes[url] = newHash
-                time.sleep(1800)
+                time.sleep(sleeptime)
                 continue
 
         except Exception as e:
