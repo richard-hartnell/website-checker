@@ -31,7 +31,8 @@ with open('./creds.txt', 'r') as password_file:
 
 url_list = ['https://www.arts.wa.gov/grants/',
             'https://whatcomcf.org/receive/apply-for-a-grant/',
-            'https://www.artsfund.org/about-arts-fund/grants/'
+            'https://www.artsfund.org/about-arts-fund/grants/',
+            'https://www.skagitcf.org/grantmaking.html'
 ]
 
 #create initial hashes
