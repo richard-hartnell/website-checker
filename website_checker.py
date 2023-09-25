@@ -58,7 +58,9 @@ laq_list = ['https://www.arts.wa.gov/grants/',
             'https://www.skagitcf.org/grantmaking.html'
 ]
 
-chard_list = ['https://www.richardhartnell.com/readme.html']
+chard_list = ['https://www.olark.com/jobs',
+              'https://careers.prezly.com/',
+]
 
 #create initial hashes
 for url in laq_list:
